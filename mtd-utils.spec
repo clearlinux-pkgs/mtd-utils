@@ -6,7 +6,7 @@
 #
 Name     : mtd-utils
 Version  : 2.0.2
-Release  : 1
+Release  : 2
 URL      : ftp://ftp.infradead.org/pub/mtd-utils/mtd-utils-2.0.2.tar.bz2
 Source0  : ftp://ftp.infradead.org/pub/mtd-utils/mtd-utils-2.0.2.tar.bz2
 Source99 : ftp://ftp.infradead.org/pub/mtd-utils/mtd-utils-2.0.2.tar.bz2.asc
