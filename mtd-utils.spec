@@ -5,12 +5,12 @@
 # Source0 file verified with key 0xBCE5DC3C741A02D1 (david.oberhollenzer@sigma-star.at)
 #
 Name     : mtd-utils
-Version  : 2.0.2
-Release  : 2
-URL      : ftp://ftp.infradead.org/pub/mtd-utils/mtd-utils-2.0.2.tar.bz2
-Source0  : ftp://ftp.infradead.org/pub/mtd-utils/mtd-utils-2.0.2.tar.bz2
-Source99 : ftp://ftp.infradead.org/pub/mtd-utils/mtd-utils-2.0.2.tar.bz2.asc
-Summary  : No detailed summary available
+Version  : 2.1.0
+Release  : 3
+URL      : ftp://ftp.infradead.org/pub/mtd-utils/mtd-utils-2.1.0.tar.bz2
+Source0  : ftp://ftp.infradead.org/pub/mtd-utils/mtd-utils-2.1.0.tar.bz2
+Source99 : ftp://ftp.infradead.org/pub/mtd-utils/mtd-utils-2.1.0.tar.bz2.asc
+Summary  : Utilities for dealing with MTD devices
 Group    : Development/Tools
 License  : GPL-2.0 MIT
 Requires: mtd-utils-bin = %{version}-%{release}
@@ -19,6 +19,7 @@ Requires: mtd-utils-man = %{version}-%{release}
 BuildRequires : acl-dev
 BuildRequires : lzo-dev
 BuildRequires : pkgconfig(cmocka)
+BuildRequires : pkgconfig(openssl)
 BuildRequires : pkgconfig(uuid)
 BuildRequires : pkgconfig(zlib)
 
@@ -36,7 +37,6 @@ UBIFS File System - Make File System program
 Summary: bin components for the mtd-utils package.
 Group: Binaries
 Requires: mtd-utils-license = %{version}-%{release}
-Requires: mtd-utils-man = %{version}-%{release}
 
 %description bin
 bin components for the mtd-utils package.
@@ -59,14 +59,15 @@ man components for the mtd-utils package.
 
 
 %prep
-%setup -q -n mtd-utils-2.0.2
+%setup -q -n mtd-utils-2.1.0
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1542909832
+export SOURCE_DATE_EPOCH=1553369350
+export LDFLAGS="${LDFLAGS} -fno-lto"
 %configure --disable-static
 make  %{?_smp_mflags}
 
@@ -78,7 +79,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1542909832
+export SOURCE_DATE_EPOCH=1553369350
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/mtd-utils
 cp COPYING %{buildroot}/usr/share/package-licenses/mtd-utils/COPYING
@@ -105,6 +106,7 @@ cp lib/LICENSE.libiniparser %{buildroot}/usr/share/package-licenses/mtd-utils/li
 /usr/bin/ftl_format
 /usr/bin/jffs2dump
 /usr/bin/jffs2reader
+/usr/bin/lsmtd
 /usr/bin/mkfs.jffs2
 /usr/bin/mkfs.ubifs
 /usr/bin/mtd_debug
@@ -141,4 +143,5 @@ cp lib/LICENSE.libiniparser %{buildroot}/usr/share/package-licenses/mtd-utils/li
 %files man
 %defattr(0644,root,root,0755)
 /usr/share/man/man1/mkfs.jffs2.1
+/usr/share/man/man8/lsmtd.8
 /usr/share/man/man8/ubinize.8
