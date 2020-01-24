@@ -5,12 +5,12 @@
 # Source0 file verified with key 0xBCE5DC3C741A02D1 (david.oberhollenzer@sigma-star.at)
 #
 Name     : mtd-utils
-Version  : 2.1.0
-Release  : 3
-URL      : ftp://ftp.infradead.org/pub/mtd-utils/mtd-utils-2.1.0.tar.bz2
-Source0  : ftp://ftp.infradead.org/pub/mtd-utils/mtd-utils-2.1.0.tar.bz2
-Source99 : ftp://ftp.infradead.org/pub/mtd-utils/mtd-utils-2.1.0.tar.bz2.asc
-Summary  : Utilities for dealing with MTD devices
+Version  : 2.1.1
+Release  : 4
+URL      : ftp://ftp.infradead.org/pub/mtd-utils/mtd-utils-2.1.1.tar.bz2
+Source0  : ftp://ftp.infradead.org/pub/mtd-utils/mtd-utils-2.1.1.tar.bz2
+Source1  : ftp://ftp.infradead.org/pub/mtd-utils/mtd-utils-2.1.1.tar.bz2.asc
+Summary  : No detailed summary available
 Group    : Development/Tools
 License  : GPL-2.0 MIT
 Requires: mtd-utils-bin = %{version}-%{release}
@@ -19,6 +19,7 @@ Requires: mtd-utils-man = %{version}-%{release}
 BuildRequires : acl-dev
 BuildRequires : lzo-dev
 BuildRequires : pkgconfig(cmocka)
+BuildRequires : pkgconfig(libzstd)
 BuildRequires : pkgconfig(openssl)
 BuildRequires : pkgconfig(uuid)
 BuildRequires : pkgconfig(zlib)
@@ -59,31 +60,36 @@ man components for the mtd-utils package.
 
 
 %prep
-%setup -q -n mtd-utils-2.1.0
+%setup -q -n mtd-utils-2.1.1
+cd %{_builddir}/mtd-utils-2.1.1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1553369350
-export LDFLAGS="${LDFLAGS} -fno-lto"
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1579827244
+export GCC_IGNORE_WERROR=1
+export CFLAGS="$CFLAGS -fno-lto "
+export FCFLAGS="$CFLAGS -fno-lto "
+export FFLAGS="$CFLAGS -fno-lto "
+export CXXFLAGS="$CXXFLAGS -fno-lto "
 %configure --disable-static
 make  %{?_smp_mflags}
 
 %check
-export LANG=C
+export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1553369350
+export SOURCE_DATE_EPOCH=1579827244
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/mtd-utils
-cp COPYING %{buildroot}/usr/share/package-licenses/mtd-utils/COPYING
-cp lib/LICENSE.libiniparser %{buildroot}/usr/share/package-licenses/mtd-utils/lib_LICENSE.libiniparser
+cp %{_builddir}/mtd-utils-2.1.1/COPYING %{buildroot}/usr/share/package-licenses/mtd-utils/74a8a6531a42e124df07ab5599aad63870fa0bd4
+cp %{_builddir}/mtd-utils-2.1.1/lib/LICENSE.libiniparser %{buildroot}/usr/share/package-licenses/mtd-utils/bd77637feb8e3f23bd137fce23e6720a816d4263
 %make_install
 
 %files
@@ -137,8 +143,8 @@ cp lib/LICENSE.libiniparser %{buildroot}/usr/share/package-licenses/mtd-utils/li
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/mtd-utils/COPYING
-/usr/share/package-licenses/mtd-utils/lib_LICENSE.libiniparser
+/usr/share/package-licenses/mtd-utils/74a8a6531a42e124df07ab5599aad63870fa0bd4
+/usr/share/package-licenses/mtd-utils/bd77637feb8e3f23bd137fce23e6720a816d4263
 
 %files man
 %defattr(0644,root,root,0755)
