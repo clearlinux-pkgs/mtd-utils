@@ -5,11 +5,11 @@
 # Source0 file verified with key 0xBCE5DC3C741A02D1 (david.oberhollenzer@sigma-star.at)
 #
 Name     : mtd-utils
-Version  : 2.1.1
-Release  : 4
-URL      : ftp://ftp.infradead.org/pub/mtd-utils/mtd-utils-2.1.1.tar.bz2
-Source0  : ftp://ftp.infradead.org/pub/mtd-utils/mtd-utils-2.1.1.tar.bz2
-Source1  : ftp://ftp.infradead.org/pub/mtd-utils/mtd-utils-2.1.1.tar.bz2.asc
+Version  : 2.1.2
+Release  : 5
+URL      : ftp://ftp.infradead.org/pub/mtd-utils/mtd-utils-2.1.2.tar.bz2
+Source0  : ftp://ftp.infradead.org/pub/mtd-utils/mtd-utils-2.1.2.tar.bz2
+Source1  : ftp://ftp.infradead.org/pub/mtd-utils/mtd-utils-2.1.2.tar.bz2.asc
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : GPL-2.0 MIT
@@ -60,19 +60,19 @@ man components for the mtd-utils package.
 
 
 %prep
-%setup -q -n mtd-utils-2.1.1
-cd %{_builddir}/mtd-utils-2.1.1
+%setup -q -n mtd-utils-2.1.2
+cd %{_builddir}/mtd-utils-2.1.2
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1579827244
+export SOURCE_DATE_EPOCH=1594685191
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
-export FCFLAGS="$CFLAGS -fno-lto "
-export FFLAGS="$CFLAGS -fno-lto "
+export FCFLAGS="$FFLAGS -fno-lto "
+export FFLAGS="$FFLAGS -fno-lto "
 export CXXFLAGS="$CXXFLAGS -fno-lto "
 %configure --disable-static
 make  %{?_smp_mflags}
@@ -85,11 +85,11 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1579827244
+export SOURCE_DATE_EPOCH=1594685191
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/mtd-utils
-cp %{_builddir}/mtd-utils-2.1.1/COPYING %{buildroot}/usr/share/package-licenses/mtd-utils/74a8a6531a42e124df07ab5599aad63870fa0bd4
-cp %{_builddir}/mtd-utils-2.1.1/lib/LICENSE.libiniparser %{buildroot}/usr/share/package-licenses/mtd-utils/bd77637feb8e3f23bd137fce23e6720a816d4263
+cp %{_builddir}/mtd-utils-2.1.2/COPYING %{buildroot}/usr/share/package-licenses/mtd-utils/74a8a6531a42e124df07ab5599aad63870fa0bd4
+cp %{_builddir}/mtd-utils-2.1.2/lib/LICENSE.libiniparser %{buildroot}/usr/share/package-licenses/mtd-utils/bd77637feb8e3f23bd137fce23e6720a816d4263
 %make_install
 
 %files
@@ -133,6 +133,7 @@ cp %{_builddir}/mtd-utils-2.1.1/lib/LICENSE.libiniparser %{buildroot}/usr/share/
 /usr/bin/ubicrc32
 /usr/bin/ubidetach
 /usr/bin/ubiformat
+/usr/bin/ubihealthd
 /usr/bin/ubimkvol
 /usr/bin/ubinfo
 /usr/bin/ubinize
