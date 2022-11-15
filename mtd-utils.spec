@@ -6,10 +6,10 @@
 #
 Name     : mtd-utils
 Version  : 2.1.2
-Release  : 6
-URL      : ftp://ftp.infradead.org/pub/mtd-utils/mtd-utils-2.1.2.tar.bz2
-Source0  : ftp://ftp.infradead.org/pub/mtd-utils/mtd-utils-2.1.2.tar.bz2
-Source1  : ftp://ftp.infradead.org/pub/mtd-utils/mtd-utils-2.1.2.tar.bz2.asc
+Release  : 7
+URL      : https://infraroot.at/pub/mtd/mtd-utils-2.1.2.tar.bz2
+Source0  : https://infraroot.at/pub/mtd/mtd-utils-2.1.2.tar.bz2
+Source1  : https://infraroot.at/pub/mtd/mtd-utils-2.1.2.tar.bz2.asc
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : GPL-2.0 MIT
@@ -68,7 +68,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1594685191
+export SOURCE_DATE_EPOCH=1668540434
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
@@ -82,14 +82,14 @@ export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-make VERBOSE=1 V=1 %{?_smp_mflags} check
+make %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1594685191
+export SOURCE_DATE_EPOCH=1668540434
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/mtd-utils
-cp %{_builddir}/mtd-utils-2.1.2/COPYING %{buildroot}/usr/share/package-licenses/mtd-utils/74a8a6531a42e124df07ab5599aad63870fa0bd4
-cp %{_builddir}/mtd-utils-2.1.2/lib/LICENSE.libiniparser %{buildroot}/usr/share/package-licenses/mtd-utils/bd77637feb8e3f23bd137fce23e6720a816d4263
+cp %{_builddir}/mtd-utils-%{version}/COPYING %{buildroot}/usr/share/package-licenses/mtd-utils/74a8a6531a42e124df07ab5599aad63870fa0bd4
+cp %{_builddir}/mtd-utils-%{version}/lib/LICENSE.libiniparser %{buildroot}/usr/share/package-licenses/mtd-utils/bd77637feb8e3f23bd137fce23e6720a816d4263
 %make_install
 
 %files
