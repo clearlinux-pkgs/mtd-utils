@@ -5,15 +5,16 @@
 # Source0 file verified with key 0xBCE5DC3C741A02D1 (david.oberhollenzer@sigma-star.at)
 #
 Name     : mtd-utils
-Version  : 2.1.2
-Release  : 7
-URL      : https://infraroot.at/pub/mtd/mtd-utils-2.1.2.tar.bz2
-Source0  : https://infraroot.at/pub/mtd/mtd-utils-2.1.2.tar.bz2
-Source1  : https://infraroot.at/pub/mtd/mtd-utils-2.1.2.tar.bz2.asc
+Version  : 2.1.5
+Release  : 8
+URL      : https://infraroot.at/pub/mtd/mtd-utils-2.1.5.tar.bz2
+Source0  : https://infraroot.at/pub/mtd/mtd-utils-2.1.5.tar.bz2
+Source1  : https://infraroot.at/pub/mtd/mtd-utils-2.1.5.tar.bz2.asc
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : GPL-2.0 MIT
 Requires: mtd-utils-bin = %{version}-%{release}
+Requires: mtd-utils-libexec = %{version}-%{release}
 Requires: mtd-utils-license = %{version}-%{release}
 Requires: mtd-utils-man = %{version}-%{release}
 BuildRequires : acl-dev
@@ -37,10 +38,20 @@ UBIFS File System - Make File System program
 %package bin
 Summary: bin components for the mtd-utils package.
 Group: Binaries
+Requires: mtd-utils-libexec = %{version}-%{release}
 Requires: mtd-utils-license = %{version}-%{release}
 
 %description bin
 bin components for the mtd-utils package.
+
+
+%package libexec
+Summary: libexec components for the mtd-utils package.
+Group: Default
+Requires: mtd-utils-license = %{version}-%{release}
+
+%description libexec
+libexec components for the mtd-utils package.
 
 
 %package license
@@ -60,15 +71,15 @@ man components for the mtd-utils package.
 
 
 %prep
-%setup -q -n mtd-utils-2.1.2
-cd %{_builddir}/mtd-utils-2.1.2
+%setup -q -n mtd-utils-2.1.5
+cd %{_builddir}/mtd-utils-2.1.5
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1668540434
+export SOURCE_DATE_EPOCH=1668540635
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto "
 export FCFLAGS="$FFLAGS -fno-lto "
@@ -85,7 +96,7 @@ export no_proxy=localhost,127.0.0.1,0.0.0.0
 make %{?_smp_mflags} check
 
 %install
-export SOURCE_DATE_EPOCH=1668540434
+export SOURCE_DATE_EPOCH=1668540635
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/mtd-utils
 cp %{_builddir}/mtd-utils-%{version}/COPYING %{buildroot}/usr/share/package-licenses/mtd-utils/74a8a6531a42e124df07ab5599aad63870fa0bd4
@@ -99,10 +110,12 @@ cp %{_builddir}/mtd-utils-%{version}/lib/LICENSE.libiniparser %{buildroot}/usr/s
 %defattr(-,root,root,-)
 /usr/bin/doc_loadbios
 /usr/bin/docfdisk
+/usr/bin/fectest
 /usr/bin/flash_erase
 /usr/bin/flash_eraseall
 /usr/bin/flash_lock
 /usr/bin/flash_otp_dump
+/usr/bin/flash_otp_erase
 /usr/bin/flash_otp_info
 /usr/bin/flash_otp_lock
 /usr/bin/flash_otp_write
@@ -115,10 +128,12 @@ cp %{_builddir}/mtd-utils-%{version}/lib/LICENSE.libiniparser %{buildroot}/usr/s
 /usr/bin/lsmtd
 /usr/bin/mkfs.jffs2
 /usr/bin/mkfs.ubifs
+/usr/bin/mount.ubifs
 /usr/bin/mtd_debug
 /usr/bin/mtdinfo
 /usr/bin/mtdpart
 /usr/bin/nanddump
+/usr/bin/nandflipbits
 /usr/bin/nandtest
 /usr/bin/nandwrite
 /usr/bin/nftl_format
@@ -140,7 +155,58 @@ cp %{_builddir}/mtd-utils-%{version}/lib/LICENSE.libiniparser %{buildroot}/usr/s
 /usr/bin/ubirename
 /usr/bin/ubirmvol
 /usr/bin/ubirsvol
+/usr/bin/ubiscan
 /usr/bin/ubiupdatevol
+
+%files libexec
+%defattr(-,root,root,-)
+/usr/libexec/mtd-utils/JitterTest
+/usr/libexec/mtd-utils/checkfs
+/usr/libexec/mtd-utils/filljffs2.sh
+/usr/libexec/mtd-utils/flash_readtest
+/usr/libexec/mtd-utils/flash_speed
+/usr/libexec/mtd-utils/flash_stress
+/usr/libexec/mtd-utils/flash_torture
+/usr/libexec/mtd-utils/free_space
+/usr/libexec/mtd-utils/fs_help_all.sh
+/usr/libexec/mtd-utils/fs_run_all.sh
+/usr/libexec/mtd-utils/fs_stress00.sh
+/usr/libexec/mtd-utils/fs_stress01.sh
+/usr/libexec/mtd-utils/fstest_monitor
+/usr/libexec/mtd-utils/ftrunc
+/usr/libexec/mtd-utils/fwrite00
+/usr/libexec/mtd-utils/gcd_hupper
+/usr/libexec/mtd-utils/integ
+/usr/libexec/mtd-utils/integck
+/usr/libexec/mtd-utils/io_basic
+/usr/libexec/mtd-utils/io_paral
+/usr/libexec/mtd-utils/io_read
+/usr/libexec/mtd-utils/io_update
+/usr/libexec/mtd-utils/load_nandsim.sh
+/usr/libexec/mtd-utils/makefiles
+/usr/libexec/mtd-utils/mkvol_bad
+/usr/libexec/mtd-utils/mkvol_basic
+/usr/libexec/mtd-utils/mkvol_paral
+/usr/libexec/mtd-utils/nandbiterrs
+/usr/libexec/mtd-utils/nandpagetest
+/usr/libexec/mtd-utils/nandsubpagetest
+/usr/libexec/mtd-utils/orph
+/usr/libexec/mtd-utils/pdfrun
+/usr/libexec/mtd-utils/perf
+/usr/libexec/mtd-utils/plotJittervsFill
+/usr/libexec/mtd-utils/rmdir00
+/usr/libexec/mtd-utils/rndrm00
+/usr/libexec/mtd-utils/rndrm99
+/usr/libexec/mtd-utils/rndwrite00
+/usr/libexec/mtd-utils/rsvol
+/usr/libexec/mtd-utils/runubitests.sh
+/usr/libexec/mtd-utils/stress_1
+/usr/libexec/mtd-utils/stress_2
+/usr/libexec/mtd-utils/stress_3
+/usr/libexec/mtd-utils/test_1
+/usr/libexec/mtd-utils/test_2
+/usr/libexec/mtd-utils/ubi-stress-test.sh
+/usr/libexec/mtd-utils/volrefcnt
 
 %files license
 %defattr(0644,root,root,0755)
