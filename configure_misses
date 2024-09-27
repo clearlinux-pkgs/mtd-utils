@@ -1,5 +1,5 @@
-Configure miss: LIBSELINUX
-Configure miss: LIBSELINUX
+Configure miss: libselinux
+Configure miss: libselinux
 Configure miss: selinux/label.h
 Configure miss: selinux/label.h
 Configure miss: selinux/selinux.h
